@@ -1,5 +1,5 @@
 <template>
-  <el-row style="height: 100%;background: red">
+  <el-row style="height: 100%;">
     <el-col :span="6">
 <!--      <h5>自定义颜色</h5>-->
       <!--  default-active="2"  -->
@@ -29,10 +29,13 @@
           :data="tableData"
           style="width: 100%;border: 1px solid cyan"
           height="90%"
+          stripe="true"
+          size="small"
           :row-class-name="tableRowClassName">
           <el-table-column
             prop="pageName"
-            label="页面名称">
+            label="页面名称"
+            :show-overflow-tooltip="true">
           </el-table-column>
           <el-table-column
             prop="pageAlias"
@@ -48,11 +51,8 @@
           </el-table-column>
           <el-table-column
             prop="pagePhysicalPath"
-            label="物理路径">
-          </el-table-column>
-          <el-table-column
-            prop="pageCreateTime"
-            label="创建时间">
+            label="物理路径"
+            :show-overflow-tooltip="true">
           </el-table-column>
         </el-table>
         <div class="block">
@@ -78,23 +78,7 @@ export default {
   data () {
     return {
       isShow11: false,
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }],
+      tableData: [],
       pageNum: 1,
       pageSize: 10,
       total: 100
@@ -108,17 +92,16 @@ export default {
       const _this = this
       axios.get('/api/cms/page/queryAllCmsPageList/' + _this.pageNum + '/' + _this.pageSize)
         .then(function (response) {
-          _this.console.log(JSON.stringify(response))
+          _this.tableData = response.data.queryResult.list
+          _this.total = response.data.queryResult.total
         })
         .catch(function (error) {
           _this.$message.error(error.toString())
         })
     },
     handleOpen (key, keyPath) {
-      console.log(key, keyPath)
     },
     handleClose (key, keyPath) {
-      console.log(key, keyPath)
     },
     tableRowClassName ({row, rowIndex}) {
       if (rowIndex === 1) {
@@ -132,13 +115,14 @@ export default {
       if (JSON.stringify(key) === JSON.stringify('1-1')) {
         this.isShow11 = true
       }
-      console.log(this.isShow11)
     },
     handleSizeChange (val) {
-      console.log(`每页 ${val} 条`)
+      this.pageSize = val
+      this.queryAllCmsPageList()
     },
     handleCurrentChange (val) {
-      console.log(`当前页: ${val}`)
+      this.pageNum = val
+      this.queryAllCmsPageList()
     }
   }
 }
@@ -146,10 +130,10 @@ export default {
 
 <style scoped>
   .el-table .warning-row {
-    background: oldlace;
+    background: red;
   }
 
   .el-table .success-row {
-    background: #f0f9eb;
+    background: powderblue;
   }
 </style>
