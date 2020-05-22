@@ -60,7 +60,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="pageNum"
-            :page-sizes="[100, 200, 300, 400]"
+            :page-sizes="[10, 20, 50, 100]"
             :page-size="pageSize"
             layout="total, sizes, prev, pager, next, jumper"
             :total="total">
@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'SystemManagementCenter',
   data () {
@@ -99,7 +100,20 @@ export default {
       total: 100
     }
   },
+  created () {
+    this.queryAllCmsPageList()
+  },
   methods: {
+    queryAllCmsPageList () {
+      const _this = this
+      axios.get('/api/cms/page/queryAllCmsPageList/' + _this.pageNum + '/' + _this.pageSize)
+        .then(function (response) {
+          _this.console.log(JSON.stringify(response))
+        })
+        .catch(function (error) {
+          _this.$message.error(error.toString())
+        })
+    },
     handleOpen (key, keyPath) {
       console.log(key, keyPath)
     },
