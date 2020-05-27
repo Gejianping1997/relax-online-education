@@ -125,6 +125,9 @@
             <el-form-item label="物理路径" :label-width="dialogFormLabelWidth11">
               <el-input v-model="dialogForm11.pagePhysicalPath" autocomplete="off"></el-input>
             </el-form-item>
+            <el-form-item label="数据来源" :label-width="dialogFormLabelWidth11">
+              <el-input v-model="dialogForm11.dataUrl" autocomplete="off"></el-input>
+            </el-form-item>
             <el-form-item label="类型" :label-width="dialogFormLabelWidth11">
               <el-radio-group v-model="dialogForm11.pageType">
                 <el-radio :label="0">静态</el-radio>
@@ -180,6 +183,9 @@
             <el-form-item label="物理路径" :label-width="dialogFormLabelWidth111">
               <el-input v-model="dialogForm111.pagePhysicalPath" autocomplete="off"></el-input>
             </el-form-item>
+            <el-form-item label="数据来源" :label-width="dialogFormLabelWidth111">
+              <el-input v-model="dialogForm111.dataUrl" autocomplete="off"></el-input>
+            </el-form-item>
             <el-form-item label="类型" :label-width="dialogFormLabelWidth111">
               <el-radio-group v-model="dialogForm111.pageType">
                 <el-radio label="0">静态</el-radio>
@@ -232,7 +238,8 @@ export default {
         'pageType': '',
         'pageCreateTime': null,
         'templateId': '',
-        'htmlFileId': ''
+        'htmlFileId': '',
+        'dataUrl': ''
       },
       dialogForm111: {
         'siteId': '',
@@ -243,7 +250,8 @@ export default {
         'pageType': '',
         'pageCreateTime': null,
         'templateId': '',
-        'htmlFileId': ''
+        'htmlFileId': '',
+        'dataUrl': ''
       },
       dialogFormLabelWidth11: '120px',
       dialogFormLabelWidth111: '120px'
